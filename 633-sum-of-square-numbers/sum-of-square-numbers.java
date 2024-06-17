@@ -4,10 +4,10 @@ class Solution {
         while(low<=high){
             long cal=(low*low)+(high*high);
             if(cal==c) return true;
-            if(cal>c){
+            else if(cal>c){
                 high--;
             }
-            if(cal<c){
+            else{
                 low++;
             }
         }
