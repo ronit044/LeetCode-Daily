@@ -1,58 +1,60 @@
 class Solution {
-     public int largestRectangleArea(int[] heights) {
-        int l=heights.length;
-        int sml[][]=new int[l][2];
-        int smr[][]=new int[l][2];
-        int p=0;
-        Stack<int[]> st=new Stack();
+    public void sml(int[] arr,int[] res,Stack<Integer> st){
+        int l=arr.length;
         for(int i=0;i<l;i++){
-            int x=-1;
             int ind=-1;
             while(!st.isEmpty()){
-                if(st.peek()[0]<heights[i]){
-                    x=st.peek()[0];
-                    ind=st.peek()[1];
+                if(arr[st.peek()]<arr[i]){
+                    ind=st.peek();
                     break;
                 }
                 st.pop();
             }
-            sml[p++]=new int[]{x,ind};
-            st.push(new int[]{heights[i],i});
+            res[i]=ind;
+            st.push(i);
         }
-        st.clear();
-        p=l-1;
+    }
+    public void smr(int[] arr,int[] res,Stack<Integer> st){
+        int l=arr.length;
         for(int i=l-1;i>=0;i--){
-            int x=l;
             int ind=l;
             while(!st.isEmpty()){
-                if(st.peek()[0]<heights[i]){
-                    x=st.peek()[0];
-                    ind=st.peek()[1];
+                if(arr[st.peek()]<arr[i]){
+                    ind=st.peek();
                     break;
                 }
                 st.pop();
             }
-            smr[p--]=new int[]{x,ind};
-            st.push(new int[]{heights[i],i});
+            res[i]=ind;
+            st.push(i);
         }
-        int ans=Integer.MIN_VALUE;
+    }
+    public int findSize(int[] arr){
+        Stack<Integer> st=new Stack<>();
+        int l=arr.length;
+        int smlArr[]=new int[l];
+        int smrArr[]=new int[l];
+        sml(arr,smlArr,st);
+        st.clear();
+        smr(arr,smrArr,st);
+        int res=0;
         for(int i=0;i<l;i++){
-            int h=(smr[i][1]-sml[i][1]-1)*heights[i];
-            ans=Math.max(ans,h);
+            int x=(smrArr[i]-smlArr[i]-1)*arr[i];
+            res=Math.max(res,x);
         }
-        return ans;
+        return res;
     }
     public int maximalRectangle(char[][] matrix) {
-        int[] histogram=new int[matrix[0].length];
-        int k=0,res=Integer.MIN_VALUE;
-        for(char i[]:matrix)
-        {
+        int l=matrix[0].length;
+        int arr[]=new int[l];
+        int k=0,res=0;
+        for(char[] x:matrix){
             k=0;
-            for(char x:i){
-                if(x=='0') histogram[k++]=0;
-                else histogram[k++]+=1;
+            for(char y:x){
+                if(y=='0') arr[k++]=0;
+                else arr[k++]+=1;
             }
-            res=Math.max(res,largestRectangleArea(histogram));
+            res=Math.max(res,findSize(arr));
         }
         return res;
     }
