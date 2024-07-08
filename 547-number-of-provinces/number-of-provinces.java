@@ -24,6 +24,7 @@ class Solution {
             for (int j = 0; j < l; j++) {
                 if (isConnected[i][j] == 1) {
                     lt[i + 1].add(j + 1);
+                    lt[j + 1].add(i + 1);
                 }
             }
         }
