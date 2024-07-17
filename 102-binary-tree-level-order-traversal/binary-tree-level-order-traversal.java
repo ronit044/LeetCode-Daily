@@ -24,7 +24,7 @@ class Solution {
             int s=q.size();
             for(int i=0;i<s;i++){
                 TreeNode r=q.poll();
-                if(r!=null){
+                // if(r!=null){
                     lt.add(r.val);
                     if(r.left!=null){
                         q.add(r.left);
@@ -32,7 +32,7 @@ class Solution {
                     if(r.right!=null){
                         q.add(r.right);
                     }
-                }
+                // }
             }
             res.add(lt);
         }
