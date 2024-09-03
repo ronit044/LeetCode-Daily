@@ -2,9 +2,7 @@ class Solution {
     public String sumOfDigitsInString(String st) {
         int sum = 0;
         for (char ch : st.toCharArray()) {
-            if (Character.isDigit(ch)) {
-                sum += Character.getNumericValue(ch);
-            }
+            sum+=ch-'0';
         }
         return Integer.toString(sum);
     }
