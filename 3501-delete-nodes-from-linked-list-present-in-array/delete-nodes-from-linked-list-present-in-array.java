@@ -9,24 +9,25 @@
  * }
  */
 class Solution {
+    public void deleteNode(ListNode head,HashSet<Integer> lt){
+        ListNode prev=head;
+        ListNode dummy=head.next;
+            while(dummy!=null){
+                if(lt.contains(dummy.val)){
+                    prev.next=dummy.next;
+                    dummy=prev.next;
+                    continue;
+                }
+                prev=dummy;
+                dummy=dummy.next;
+            }
+    }
     public ListNode modifiedList(int[] nums, ListNode head) {
         HashSet<Integer> lt=new HashSet<>();
         for(int i:nums) lt.add(i);
-        ListNode prev=null;
-        ListNode curr=head;
-        while(curr!=null){
-            if(lt.contains(curr.val)){
-                if(prev==null || head.val==curr.val){
-                    head=head.next;
-                }
-                else{
-                    prev.next=curr.next;
-                }
-            }
-            else
-            prev=curr;
-            curr=curr.next;
-        }
+            while(lt.contains(head.val))
+                 head=head.next;
+            deleteNode(head,lt);
         return head;
     }
 }
