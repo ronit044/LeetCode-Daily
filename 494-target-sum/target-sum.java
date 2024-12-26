@@ -1,16 +1,16 @@
 class Solution {
-    int res=0;
-    public void helper(int[] nums,int ind,int target,int calc){
+    public int helper(int[] nums,int ind,int target,int calc,int[][] dp){
         if(ind>nums.length-1){
             if(calc==target)
-                res++;
-            return;
+                return 1;
+            return 0;
         }
-        helper(nums,ind+1,target,calc+nums[ind]);
-        helper(nums,ind+1,target,calc-nums[ind]);
+        if(dp[ind][calc+1000]!=-1) return dp[ind][calc+1000];
+        return dp[ind][calc+1000]=helper(nums,ind+1,target,calc+nums[ind],dp)+helper(nums,ind+1,target,calc-nums[ind],dp);
     }
     public int findTargetSumWays(int[] nums, int target) {
-        helper(nums,0,target,0);
-        return res;
+        int dp[][]=new int[nums.length][5000];
+        for(int ar[]:dp) Arrays.fill(ar,-1);
+        return helper(nums,0,target,0,dp);
     }
 }
