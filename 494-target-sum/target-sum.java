@@ -1,22 +1,16 @@
 class Solution {
-    public int helper(int[] nums, int ind, int sum, int t, int[][] dp) {
-        if (ind > nums.length - 1) {
-            if (sum == t) {
-                return 1;
-            }
-            return 0;
+    int res=0;
+    public void helper(int[] nums,int ind,int target,int calc){
+        if(ind>nums.length-1){
+            if(calc==target)
+                res++;
+            return;
         }
-        if (dp[ind][sum + 1000] != -1) return dp[ind][sum + 1000]; // shifting sum by 1000 to handle negative indices
-        int a = helper(nums, ind + 1, sum - nums[ind], t, dp);
-        int b = helper(nums, ind + 1, sum + nums[ind], t, dp);
-        return dp[ind][sum + 1000] = a + b;
+        helper(nums,ind+1,target,calc+nums[ind]);
+        helper(nums,ind+1,target,calc-nums[ind]);
     }
-
     public int findTargetSumWays(int[] nums, int target) {
-        int[][] dp = new int[nums.length][2001]; // range of sum is -1000 to 1000
-        for (int[] row : dp) {
-            Arrays.fill(row, -1);
-        }
-        return helper(nums, 0, 0, target, dp);
+        helper(nums,0,target,0);
+        return res;
     }
 }
